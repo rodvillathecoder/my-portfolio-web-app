@@ -5,8 +5,14 @@ import { Flex } from "@chakra-ui/react";
 import BackgroundImage from "./assets/synthwave-green-grid-art.jpg";
 import MainHeader from "./components/app-header";
 import HomePage from "./pages/home-page";
+import { useLocation } from "react-router-dom";
+import AboutMePage from "./pages/aboutme-page";
 
 function App() {
+  const location = useLocation();
+  const homePage = location.pathname === "/";
+  const aboutMePage = location.pathname === "/about-me";
+
   return (
     <Flex
       className="hide-scrollbar"
@@ -27,7 +33,8 @@ function App() {
         <MainHeader />
       </Flex>
       <Flex paddingTop={"7rem"} justifyContent={"center"}>
-        <HomePage />
+        {homePage && <HomePage />}
+        {aboutMePage && <AboutMePage />}
       </Flex>
     </Flex>
   );

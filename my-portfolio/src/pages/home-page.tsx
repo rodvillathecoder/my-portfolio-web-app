@@ -4,7 +4,6 @@ import Citado2 from "../assets/cita-a-la-derecha.png";
 import Github from "../assets/github.png";
 import LinkedIn from "../assets/linkedin.png";
 import Arhivo from "../assets/archivo.png";
-import ThreeBackground from "../components/three-background";
 
 const headTextStyle = {
   fontSize: "60px",
@@ -145,8 +144,8 @@ const HomePage = () => {
             noOfLines={4}
             maxWidth={"900px"}
           >
-            Esta es mi web app personal donde puedes aprender más sobre mi
-            experiencia, formación y habilidades.
+            ¡Hola! Esta es mi web app personal donde puedes aprender más sobre
+            mi experiencia, formación y habilidades.
             <br /> Puedes encontrar el repositorio de este proyecto en mi
             GitHub.
           </Text>

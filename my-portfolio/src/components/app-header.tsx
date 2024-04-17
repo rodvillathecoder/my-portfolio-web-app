@@ -1,93 +1,170 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Flex, Text, Box } from "@chakra-ui/react";
-// import { useContext, useEffect } from "react";
-// import { AppContext } from "../context/app-context";
 
 const headBtnStyles = {
-  backgroundColor: "#E5E5E5",
-  borderRadius: "10px",
+  backgroundColor: "transparent",
+  border: "1px solid #E5E5E5",
+  borderRadius: "1px",
   padding: "8px",
   width: "180px",
   height: "40px",
   justifyContent: "center",
   alignContent: "center",
   _hover: {
-    backgroundColor: "#15F5BA",
     cursor: "pointer",
   },
 };
 
 const textBtnStyles = {
   fontFamily: "Orbitron, sans-serif",
-  color: "#1985a1",
+  color: "#E5E5E5",
   fontWeight: "bold",
   fontSize: "14px",
   textAlign: "center",
 };
 
-const MainHeader = () => {
-  // const { pathname } = useLocation();
-  // const { isSelectedButton, setIsSelectedButton } = useContext(AppContext);
+const selectedTextBtnStyles = {
+  ...textBtnStyles,
+  color: "#FCA311",
+};
 
-  // useEffect(() => {
-  //   setIsSelectedButton({
-  //     Home: pathname === "/",
-  //     Github: pathname === "/github",
-  //     LinkedIn: pathname === "/linkedin",
-  //     CV: pathname === "/cv",
-  //   });
-  // }, [pathname, setIsSelectedButton]);
+const MainHeader = () => {
+  const location = useLocation();
+
+  const isLinkSelected = (pathname: string) => {
+    return location.pathname === pathname;
+  };
 
   return (
     <Flex
       direction="row"
       width="100%"
       backgroundColor={"#000000"}
-      height={"95px"}
+      height={"85px"}
       justifyContent={"space-between"}
       padding={"20px 120px"}
-      background="linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%)"
+      background="linear-gradient(0deg, rgba(0,0,0,0) 5%, rgba(0,0,0,1) 20%)"
     >
       <Flex direction="row" justifyContent="space-between" width="100%">
         <Box as="button">
           <Link to="/">
-            <Box sx={headBtnStyles}>
-              <Text sx={textBtnStyles}>Home</Text>
+            <Box
+              sx={
+                isLinkSelected("/")
+                  ? { ...headBtnStyles, backgroundColor: "#333333" }
+                  : headBtnStyles
+              }
+            >
+              <Text
+                sx={isLinkSelected("/") ? selectedTextBtnStyles : textBtnStyles}
+              >
+                Home
+              </Text>
             </Box>
           </Link>
         </Box>
         <Box as="button">
           <Link to="/about-me">
-            <Box sx={headBtnStyles}>
-              <Text sx={textBtnStyles}>About Me</Text>
+            <Box
+              sx={
+                isLinkSelected("/about-me")
+                  ? { ...headBtnStyles, backgroundColor: "#333333" }
+                  : headBtnStyles
+              }
+            >
+              <Text
+                sx={
+                  isLinkSelected("/about-me")
+                    ? selectedTextBtnStyles
+                    : textBtnStyles
+                }
+              >
+                About Me
+              </Text>
             </Box>
           </Link>
         </Box>
         <Box as="button">
           <Link to="/work-experience">
-            <Box sx={headBtnStyles}>
-              <Text sx={textBtnStyles}>Work Experience</Text>
+            <Box
+              sx={
+                isLinkSelected("/work-experience")
+                  ? { ...headBtnStyles, backgroundColor: "#333333" }
+                  : headBtnStyles
+              }
+            >
+              <Text
+                sx={
+                  isLinkSelected("/work-experience")
+                    ? selectedTextBtnStyles
+                    : textBtnStyles
+                }
+              >
+                Work Experience
+              </Text>
             </Box>
           </Link>
         </Box>
         <Box as="button">
           <Link to="/education">
-            <Box sx={headBtnStyles}>
-              <Text sx={textBtnStyles}>Education</Text>
+            <Box
+              sx={
+                isLinkSelected("/education")
+                  ? { ...headBtnStyles, backgroundColor: "#333333" }
+                  : headBtnStyles
+              }
+            >
+              <Text
+                sx={
+                  isLinkSelected("/education")
+                    ? selectedTextBtnStyles
+                    : textBtnStyles
+                }
+              >
+                Education
+              </Text>
             </Box>
           </Link>
         </Box>
         <Box as="button">
           <Link to="/certificate-courses">
-            <Box sx={headBtnStyles}>
-              <Text sx={textBtnStyles}>Certificate Courses</Text>
+            <Box
+              sx={
+                isLinkSelected("/certificate-courses")
+                  ? { ...headBtnStyles, backgroundColor: "#333333" }
+                  : headBtnStyles
+              }
+            >
+              <Text
+                sx={
+                  isLinkSelected("/certificate-courses")
+                    ? selectedTextBtnStyles
+                    : textBtnStyles
+                }
+              >
+                Certificate Courses
+              </Text>
             </Box>
           </Link>
         </Box>
         <Box as="button">
           <Link to="/contact">
-            <Box sx={headBtnStyles}>
-              <Text sx={textBtnStyles}>Contact Me</Text>
+            <Box
+              sx={
+                isLinkSelected("/contact")
+                  ? { ...headBtnStyles, backgroundColor: "#333333" }
+                  : headBtnStyles
+              }
+            >
+              <Text
+                sx={
+                  isLinkSelected("/contact")
+                    ? selectedTextBtnStyles
+                    : textBtnStyles
+                }
+              >
+                Contact Me
+              </Text>
             </Box>
           </Link>
         </Box>
