@@ -17,88 +17,379 @@ import {
   List,
   Text,
 } from "@chakra-ui/react";
-import { TriangleUpIcon, TriangleDownIcon, MinusIcon } from "@chakra-ui/icons";
+import {
+  TriangleUpIcon,
+  TriangleDownIcon,
+  MinusIcon,
+  ViewIcon,
+} from "@chakra-ui/icons";
+import { useMemo, useState } from "react";
 
 interface ModalSkillsProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+interface SkillItem {
+  id: number;
+  name: string;
+  level: "high" | "medium" | "low";
+  icon: React.ReactElement;
+}
+
 const ModalSkills = ({ isOpen, onClose }: ModalSkillsProps) => {
+  const [filter, setFilter] = useState<"high" | "medium" | "low" | "all">(
+    "all"
+  );
+
+  const skillLists: { title: string; skills: SkillItem[] }[] = [
+    {
+      title: "Lenguajes",
+      skills: [
+        {
+          id: 1,
+          name: "JavaScript",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 2,
+          name: "TypeScript",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 3,
+          name: "HTML",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 4,
+          name: "CSS",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 5,
+          name: "GraphQL",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 6,
+          name: "C#",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 7,
+          name: "Java",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+        {
+          id: 8,
+          name: "Dart",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+      ],
+    },
+    {
+      title: "Frameworks/Bibliotecas Frontend",
+      skills: [
+        {
+          id: 1,
+          name: "React",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 2,
+          name: "NextJS",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 3,
+          name: "React Native",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 4,
+          name: "Material UI",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 5,
+          name: "Chakra UI",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 6,
+          name: "Tailwind",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 7,
+          name: "Bootstrap",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 8,
+          name: "Redux",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 9,
+          name: "Three.js",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 10,
+          name: "Pixi.js",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 11,
+          name: "Flutter",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+      ],
+    },
+    {
+      title: "Frameworks/Bibliotecas Backend",
+      skills: [
+        {
+          id: 1,
+          name: "NodeJS",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+        {
+          id: 2,
+          name: "Spring Boot",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+      ],
+    },
+    {
+      title: "BDD y Data Management",
+      skills: [
+        {
+          id: 1,
+          name: "Firebase",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 2,
+          name: "MySQL",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 3,
+          name: "MongoDB",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+        {
+          id: 4,
+          name: "PostgreSQL",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+      ],
+    },
+    {
+      title: "Despliegue y Desarrollo",
+      skills: [
+        {
+          id: 1,
+          name: "Vite",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 2,
+          name: "Parcel",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 3,
+          name: "Vercel",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 4,
+          name: "Webpack",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+      ],
+    },
+    {
+      title: "Testing",
+      skills: [
+        {
+          id: 1,
+          name: "Unit Testing",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 2,
+          name: "e2e Testing",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 3,
+          name: "Jest",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 4,
+          name: "Cypress",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+      ],
+    },
+    {
+      title: "Otros",
+      skills: [
+        {
+          id: 1,
+          name: "Agile Development",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 2,
+          name: "Scrum/Kanban",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 3,
+          name: "Git/GitHub/Gitflow",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 4,
+          name: "Atlassian/Jira",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+        {
+          id: 5,
+          name: "Postman",
+          level: "low",
+          icon: <TriangleDownIcon w={4} h={4} color={"red.500"} />,
+        },
+        {
+          id: 6,
+          name: "PWA",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 7,
+          name: "TDD",
+          level: "medium",
+          icon: <MinusIcon w={4} h={4} color={"orange.500"} />,
+        },
+        {
+          id: 8,
+          name: "CI/CD",
+          level: "high",
+          icon: <TriangleUpIcon w={4} h={4} color={"green.500"} />,
+        },
+      ],
+    },
+  ];
+
+  // const filteredSkills = useMemo(() => {
+  //   if (filter === "all") return skillLists.flatMap((list) => list.skills);
+  //   return skillLists.flatMap((list) =>
+  //     list.skills.filter((skill) => skill.level === filter)
+  //   );
+  // }, [filter]);
+
+  const filteredSkills = useMemo(() => {
+    if (filter === "all") return skillLists.flatMap((list) => list.skills);
+    return skillLists
+      .flatMap((list) => list.skills)
+      .filter((skill) => skill.level === filter);
+  }, [filter]);
+
+  const renderSkillList = (skills: SkillItem[]) => {
+    return (
+      <List
+        padding={"16px 2px"}
+        spacing={8}
+        stylePosition={"inside"}
+        style={{ columnCount: 4 }}
+      >
+        {skills.map((skill) => (
+          <ListItem key={skill.id}>
+            <ListIcon
+              as="svg"
+              color={
+                skill.level === "high"
+                  ? "green.500"
+                  : skill.level === "medium"
+                  ? "orange.500"
+                  : "red.500"
+              }
+            >
+              {skill.icon}
+            </ListIcon>
+            {skill.name}
+          </ListItem>
+        ))}
+      </List>
+    );
+  };
+
   return (
     <>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
         isCentered
-        motionPreset="slideInRight"
+        motionPreset="slideInLeft"
         size={"6xl"}
       >
         <ModalOverlay />
-        <ModalContent backgroundColor={"#E5E5E5"}>
-          <ModalHeader textAlign="center">My Skills</ModalHeader>{" "}
+        <ModalContent backgroundColor={"#F3F9FB"}>
+          <ModalHeader textAlign="center">My Skills</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex minH={"300px"} padding={"6px"}>
               <Flex>
                 <Tabs colorScheme="yellow">
                   <TabList w={"100%"} display={"flex"}>
-                    <Tab
-                      border={"1px solid #000000"}
-                      _selected={{ backgroundColor: "rgba(20, 33, 61, 0.1)" }}
-                      _active={{ backgroundColor: "orange" }}
-                      flex={1}
-                    >
-                      Lenguajes
-                    </Tab>
-                    <Tab
-                      border={"1px solid #000000"}
-                      _selected={{ backgroundColor: "rgba(20, 33, 61, 0.1)" }}
-                      _active={{ backgroundColor: "orange" }}
-                      flex={1}
-                    >
-                      Frameworks/Bibliotecas Frontend
-                    </Tab>
-                    <Tab
-                      border={"1px solid #000000"}
-                      _selected={{ backgroundColor: "rgba(20, 33, 61, 0.1)" }}
-                      _active={{ backgroundColor: "orange" }}
-                      flex={1}
-                    >
-                      Frameworks/Bibliotecas Backend
-                    </Tab>
-                    <Tab
-                      border={"1px solid #000000"}
-                      _selected={{ backgroundColor: "rgba(20, 33, 61, 0.1)" }}
-                      _active={{ backgroundColor: "orange" }}
-                      flex={1}
-                    >
-                      BDD y Data Management
-                    </Tab>
-                    <Tab
-                      border={"1px solid #000000"}
-                      _selected={{ backgroundColor: "rgba(20, 33, 61, 0.1)" }}
-                      _active={{ backgroundColor: "orange" }}
-                      flex={1}
-                    >
-                      Despliegue y Desarrollo
-                    </Tab>
-                    <Tab
-                      border={"1px solid #000000"}
-                      _selected={{ backgroundColor: "rgba(20, 33, 61, 0.1)" }}
-                      _active={{ backgroundColor: "orange" }}
-                      flex={1}
-                    >
-                      Testing
-                    </Tab>
-                    <Tab
-                      border={"1px solid #000000"}
-                      _selected={{ backgroundColor: "rgba(20, 33, 61, 0.1)" }}
-                      _active={{ backgroundColor: "orange" }}
-                      flex={1}
-                    >
-                      Otros
-                    </Tab>
+                    {skillLists.map((list, index) => (
+                      <Tab key={index}>{list.title}</Tab>
+                    ))}
                   </TabList>
                   <TabPanels
                     borderBottom={"1px solid #000000"}
@@ -106,233 +397,11 @@ const ModalSkills = ({ isOpen, onClose }: ModalSkillsProps) => {
                     borderLeft={"1px solid #000000"}
                     minHeight={"225px"}
                   >
-                    <TabPanel>
-                      <List
-                        padding={"16px 2px"}
-                        spacing={8}
-                        stylePosition={"inside"}
-                        style={{ columnCount: 4 }}
-                      >
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          JavaScript
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          TypeScript
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          HTML
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          CSS
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          GraphQL
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          C#
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          Java
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          Dart
-                        </ListItem>
-                      </List>
-                    </TabPanel>
-                    <TabPanel>
-                      <List
-                        padding={"16px 2px"}
-                        spacing={8}
-                        stylePosition={"inside"}
-                        style={{ columnCount: 4 }}
-                      >
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          React
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          NextJS
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          React Native
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Material UI
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Chakra UI
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Tailwind
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Bootstrap
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Redux
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Three.js
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Pixi.js
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          Flutter
-                        </ListItem>
-                      </List>
-                    </TabPanel>
-                    <TabPanel>
-                      <List
-                        padding={"16px 2px"}
-                        spacing={8}
-                        stylePosition={"inside"}
-                        style={{ columnCount: 4 }}
-                      >
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          NodeJS
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          Spring Boot
-                        </ListItem>
-                      </List>
-                    </TabPanel>
-                    <TabPanel>
-                      <List
-                        padding={"16px 2px"}
-                        spacing={8}
-                        stylePosition={"inside"}
-                        style={{ columnCount: 4 }}
-                      >
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Firebase
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          MySQL
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          MongoDB
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          PostgreSQL
-                        </ListItem>
-                      </List>
-                    </TabPanel>
-                    <TabPanel>
-                      <List
-                        padding={"16px 2px"}
-                        spacing={8}
-                        stylePosition={"inside"}
-                        style={{ columnCount: 4 }}
-                      >
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Vite
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Parcel
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Vercel
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          Webpack
-                        </ListItem>
-                      </List>
-                    </TabPanel>
-                    <TabPanel>
-                      <List
-                        padding={"16px 2px"}
-                        spacing={8}
-                        stylePosition={"inside"}
-                        style={{ columnCount: 4 }}
-                      >
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Unit Testing
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          e2e Testing
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Jest
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          Cypress
-                        </ListItem>
-                      </List>
-                    </TabPanel>
-                    <TabPanel>
-                      <List
-                        padding={"16px 2px"}
-                        spacing={8}
-                        stylePosition={"inside"}
-                        style={{ columnCount: 4 }}
-                      >
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Agile Development
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Scrum/Kanban
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Git/GitHub/Gitflow
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          Atlassian/Jira
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleDownIcon} color="red.500" />
-                          Postman
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          PWA
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={MinusIcon} color="orange.500" />
-                          TDD
-                        </ListItem>
-                        <ListItem>
-                          <ListIcon as={TriangleUpIcon} color="green.500" />
-                          CI/CD
-                        </ListItem>
-                      </List>
-                    </TabPanel>
+                    {skillLists.map((list, index) => (
+                      <TabPanel key={index}>
+                        {renderSkillList(list.skills)}
+                      </TabPanel>
+                    ))}
                   </TabPanels>
                 </Tabs>
               </Flex>
@@ -346,18 +415,35 @@ const ModalSkills = ({ isOpen, onClose }: ModalSkillsProps) => {
               alignContent={"center"}
               padding={"0 10px"}
             >
-              <Flex justifyItems={"center"} alignItems={"center"} gap={"2px"}>
-                <TriangleUpIcon w={4} h={4} color={"green.500"} />
-                <Text>High level</Text>
-              </Flex>
-              <Flex justifyItems={"center"} alignItems={"center"} gap={"2px"}>
-                <MinusIcon w={4} h={4} color={"orange.500"} />
-                <Text>Medium level</Text>
-              </Flex>
-              <Flex justifyItems={"center"} alignItems={"center"} gap={"2px"}>
-                <TriangleDownIcon w={4} h={4} color={"red.500"} />
-                <Text>Low level</Text>
-              </Flex>
+              {["high", "medium", "low", "all"].map((level) => (
+                <Flex
+                  key={level}
+                  justifyItems={"center"}
+                  alignItems={"center"}
+                  gap={"2px"}
+                  as={"button"}
+                  onClick={() =>
+                    setFilter(level as "high" | "medium" | "low" | "all")
+                  }
+                >
+                  {level === "high" && (
+                    <TriangleUpIcon w={4} h={4} color={"green.500"} />
+                  )}
+                  {level === "medium" && (
+                    <MinusIcon w={4} h={4} color={"orange.500"} />
+                  )}
+                  {level === "low" && (
+                    <TriangleDownIcon w={4} h={4} color={"red.500"} />
+                  )}
+                  <Text>
+                    {level === "all"
+                      ? "All"
+                      : `${level.charAt(0).toUpperCase()}${level.slice(
+                          1
+                        )} level`}
+                  </Text>
+                </Flex>
+              ))}
             </Flex>
           </ModalFooter>
         </ModalContent>

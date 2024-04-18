@@ -1,4 +1,4 @@
-import { Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, Text, useDisclosure, Image } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
@@ -98,87 +98,88 @@ const AboutMePage = () => {
   };
 
   return (
-    <Flex flexDirection={"column"} gap={"4rem"}>
-      <Flex position={"absolute"} right={"15%"} top={"20%"}>
-        <img
+    <Flex gap={"4rem"} padding={"80px 150px"} flexDirection={"row"}>
+      <Flex flexDirection={"column"}>
+        <Image
           src={Photo}
           alt="Raul Rodriguez Villarrasa"
           style={{
             borderRadius: "10px",
-            width: "21.875rem",
-            height: "34.375rem",
+            maxWidth: "350px",
+            height: "550px",
             border: "1px solid #E5E5E5",
           }}
         />
-      </Flex>
-      <Flex
-        flexDirection={"row"}
-        backgroundColor={"rgba(20, 33, 61, 0.3)"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        padding={"5rem"}
-        gap={"2rem"}
-        border={"1px solid #E5E5E5"}
-        borderRadius={"0.625rem"}
-        maxW={"52rem"}
-        maxH={"17rem"}
-        left={"10%"}
-        top={"18%"}
-        position={"absolute"}
-      >
-        <Text sx={textStyle}>
-          Soy un Frontend Developer con dos años de experiencia especializado en
-          React. Con un perfil proactivo y resolutivo, me mantengo en constante
-          aprendizaje y desarrollo, tanto de mis soft-skills como de mis
-          hard-skills. Esto me permite afrontar retos con una mentalidad
-          positiva y no temerle a aprender nuevas tecnologías.
-        </Text>
-        <Flex>
-          <div ref={mount} />
-        </Flex>
-      </Flex>
-      <Flex
-        flexDirection={"row"}
-        backgroundColor={"rgba(20, 33, 61, 0.3)"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        padding={"5rem"}
-        gap={"2rem"}
-        border={"1px solid #E5E5E5"}
-        borderRadius={"0.625rem"}
-        maxW={"52rem"}
-        maxH={"15rem"}
-        left={"10%"}
-        position={"absolute"}
-      >
-        <Text sx={textStyle}>
-          Tengo un nivel de inglés profesional ya que estoy acostumbrado a
-          trabajar en un entorno internacional, con equipo y clientes de todas
-          partes del mundo, trabajando con una metodología ágil SCRUM.
-        </Text>
-        <Flex>
-          <div ref={mount2} />
+        <Flex
+          backgroundColor={"rgba(20, 33, 61, 0.3)"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          padding={"1rem"}
+          gap={"1rem"}
+          border={"1px solid #E5E5E5"}
+          borderRadius={"0.625rem"}
+          maxWidth={"100%"}
+          position={"relative"}
+          marginTop={"1rem"}
+          as={"button"}
+          onClick={onOpen}
+        >
+          <Text sx={textStyle}>Show Skills</Text>
         </Flex>
       </Flex>
       <Flex
         flexDirection={"column"}
-        backgroundColor={"rgba(20, 33, 61, 0.3)"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        padding={"1rem"}
-        gap={"1rem"}
-        border={"1px solid #E5E5E5"}
-        borderRadius={"0.625rem"}
-        maxW={"22rem"}
-        maxH={"7rem"}
-        right={"21%"}
-        position={"absolute"}
-        marginTop={"18rem"}
-        as={"button"}
-        onClick={onOpen}
+        gap={"45px"}
+        justifyContent={"space-around"}
       >
-        <Text sx={textStyle}>Show Skills</Text>
+        <Flex
+          flexDirection={"row"}
+          backgroundColor={"rgba(20, 33, 61, 0.3)"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          padding={"2rem"}
+          gap={"2rem"}
+          border={"1px solid #E5E5E5"}
+          borderRadius={"0.625rem"}
+          maxWidth={"100%"}
+          maxHeight={"220px"}
+          position={"relative"}
+        >
+          <Text sx={textStyle}>
+            Soy un Frontend Developer con dos años de experiencia especializado
+            en React. Con un perfil proactivo y resolutivo, me mantengo en
+            constante aprendizaje y desarrollo, tanto de mis soft-skills como de
+            mis hard-skills. Esto me permite afrontar retos con una mentalidad
+            positiva y no temerle a aprender nuevas tecnologías.
+          </Text>
+          <Flex>
+            <div ref={mount} />
+          </Flex>
+        </Flex>
+        <Flex
+          flexDirection={"row"}
+          backgroundColor={"rgba(20, 33, 61, 0.3)"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          padding={"2rem"}
+          gap={"2rem"}
+          border={"1px solid #E5E5E5"}
+          borderRadius={"0.625rem"}
+          maxWidth={"100%"}
+          maxHeight={"220px"}
+          position={"relative"}
+        >
+          <Text sx={textStyle}>
+            Tengo un nivel de inglés profesional ya que estoy acostumbrado a
+            trabajar en un entorno internacional, con equipo y clientes de todas
+            partes del mundo, trabajando con una metodología ágil SCRUM.
+          </Text>
+          <Flex>
+            <div ref={mount2} />
+          </Flex>
+        </Flex>
       </Flex>
+
       <ModalSkills isOpen={isOpen} onClose={onClose} />
     </Flex>
   );
