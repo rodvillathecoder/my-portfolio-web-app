@@ -7,11 +7,13 @@ import MainHeader from "./components/app-header";
 import HomePage from "./pages/home-page";
 import { useLocation } from "react-router-dom";
 import AboutMePage from "./pages/aboutme-page";
+import WorkExperiencePage from "./pages/workexperience-page";
 
 function App() {
   const location = useLocation();
   const homePage = location.pathname === "/";
   const aboutMePage = location.pathname === "/about-me";
+  const workExperiencePage = location.pathname === "/work-experience";
 
   return (
     <Flex
@@ -35,6 +37,7 @@ function App() {
       <Flex paddingTop={"7rem"} justifyContent={"center"}>
         {homePage && <HomePage />}
         {aboutMePage && <AboutMePage />}
+        {workExperiencePage && <WorkExperiencePage />}
       </Flex>
     </Flex>
   );
